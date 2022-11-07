@@ -88,7 +88,7 @@ keycloak:
   
   sslcertificate:
     secretName: formsflow-eks.aot-technologies.com-tls # Name for tls secretname
-    issuer: letsencrypt-prod   # Name for tls issuer name
+    issuer: letsencrypt-dev   # Name for tls issuer name
   ingress:
     enabled: false
     extraTls:
