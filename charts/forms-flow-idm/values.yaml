@@ -65,10 +65,10 @@ keycloak:
 
   resources:
     limits:
-      cpu: 600m
+      cpu: 500m
       memory: 2Gi
     requests:
-      cpu: 500m
+      cpu: 400m
       memory: 1Gi
 
   containerSecurityContext:
@@ -87,7 +87,7 @@ keycloak:
     port: 80
   
   sslcertificate:
-    secretName: formsflow-eks.aot-technologies.com-tls # Name for tls secretname
+    secretName: formsflow-idm-eks.aot-technologies.com-tls # Name for tls secretname
     issuer: letsencrypt-dev   # Name for tls issuer name
   ingress:
     enabled: false
