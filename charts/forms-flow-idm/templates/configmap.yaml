@@ -796,14 +796,14 @@ data:
         {
           "clientId": "forms-flow-analytics",
           "description": "Redash-Analytics",
-          "adminUrl": "http://forms-flow-analytics:5000/saml/callback?org_slug=default",
+          "adminUrl": "http://localhost:7000/saml/callback?org_slug=default",
           "surrogateAuthRequired": false,
           "enabled": true,
           "alwaysDisplayInConsole": false,
           "clientAuthenticatorType": "client-secret",
           "secret": "**********",
           "redirectUris": [
-          "http://forms-flow-analytics:5000/*",
+          "http://localhost:7000/*",
             "*"
           ],
           "webOrigins": [],
@@ -885,7 +885,7 @@ data:
           "clientAuthenticatorType": "client-secret",
           "secret":  "786001d6-68a8-4519-903c-bc5b5a870d68",
           "redirectUris": [
-          "http://forms-flow-bpm:8080/camunda/*",
+          "http://localhost:8000/camunda/*",
             "*"
           ],
           "webOrigins": [
@@ -1037,7 +1037,7 @@ data:
           "clientAuthenticatorType": "client-secret",
           "secret": "**********",
           "redirectUris": [
-          "http://forms-flow-web:8080/*",
+          "http://localhost:3000/*",
             "*"
           ],
           "webOrigins": [
