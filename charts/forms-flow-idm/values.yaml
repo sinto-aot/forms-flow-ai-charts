@@ -63,10 +63,10 @@ keycloak:
 
   resources:
     limits:
-      cpu: 2
+      cpu: 500m
       memory: 3Gi
     requests:
-      cpu: 1.6
+      cpu: 400m
       memory: 2Gi
 
   containerSecurityContext:
