@@ -81,6 +81,8 @@ keycloak:
       enabled: false
   
   ingress:
+    annotations:
+    kubernetes.io/ingress.class: nginx
     enabled: true
     extraTls:
       - {}

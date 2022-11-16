@@ -31,7 +31,7 @@ data:
   FORMSFLOW_ADMIN_BASE: https://forms-flow-admin-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}/api
   MODEL_ID: "Seethal/sentiment_analysis_generic_dataset"
   INSIGHT_API_URL: https://forms-flow-analytics-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-  KEYCLOAK_ENABLE_CLIENT_AUTH: "True"
+  KEYCLOAK_ENABLE_CLIENT_AUTH: "false"
   MULTI_TENANCY_ENABLED: "False"
   DATA_ANALYSIS_URL:  https://forms-flow-data-analysis-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
   NODE_ENV: "production"
@@ -44,5 +44,5 @@ data:
   REDIS_HOST: "{{.Values.redis_host}}"
   REDIS_PORT: "{{.Values.redis_port}}"
   REDIS_ENABLED: "false"
-
+  CHROME_DRIVER_PATH: "/usr/local/bin/chromedriver"
 
