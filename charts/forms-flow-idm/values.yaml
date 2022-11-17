@@ -51,6 +51,8 @@ keycloak:
         size: 2Gi 
       podSecurityContext:
         enabled: false
+        runAsUser: null
+        fsGroup: null
       service:
         ports:
           postgresql: 5432  # PostgreSQL service port
@@ -82,7 +84,7 @@ keycloak:
   
   ingress:
     annotations:
-    kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: nginx
     enabled: true
     extraTls:
       - {}
