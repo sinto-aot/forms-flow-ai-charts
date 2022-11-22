@@ -46,7 +46,7 @@ ingress:
   hostname: "{{.Chart.Name}}-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
   port: 8080
   tls: []
-  #  - secretName: chart-example-tls
+  #  - secretName: "{{.Chart.Name}}-{{.Release.Namespace}}.{{tpl .Values.Domain .}}-tls"
   #    hosts:
   #      - "{{.Chart.Name}}-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
 mail:
