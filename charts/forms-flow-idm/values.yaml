@@ -81,13 +81,14 @@ keycloak:
       enabled: false
     podSecurityContext:
       enabled: false
-  
+  service:
+    type: ClusterIP
   ingress:
     annotations:
       kubernetes.io/ingress.class: nginx
-    enabled: true
     extraTls:
       - {}
+    enabled: true
     hostname: #DEFINE_ME
     pathtype: Prefix
     servicePort: http
