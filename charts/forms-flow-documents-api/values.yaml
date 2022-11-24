@@ -2,10 +2,10 @@
 Domain: #<DEFINE_ME>
 resources:
   limits:
-    cpu: 600m
+    cpu: 200m
     memory: 1Gi
   requests:
-    cpu: 500m
+    cpu: 100m
     memory: 512Mi
 
 formsflow:

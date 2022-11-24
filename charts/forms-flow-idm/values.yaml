@@ -50,7 +50,9 @@ keycloak:
         storageClass: ""
         size: 2Gi 
       podSecurityContext:
-        enabled: false
+        enabled: true
+        fsGroup: 1001
+        runAsUser: 1001
       service:
         ports:
           postgresql: 5432  # PostgreSQL service port
@@ -63,10 +65,10 @@ keycloak:
 
   resources:
     limits:
-      cpu: 2
+      cpu: 500m
       memory: 3Gi
     requests:
-      cpu: 1.6
+      cpu: 400m
       memory: 2Gi
 
   containerSecurityContext:
@@ -80,6 +82,12 @@ keycloak:
     podSecurityContext:
       enabled: false
   
+  service:
+    type: ClusterIP
+    port: 80
+  sslcertificate:
+    secretName: formsflow-idm-eks.aot-technologies.com-tls # Name for tls secretname
+    issuer: letsencrypt-dev
   ingress:
     enabled: true
     extraTls:
