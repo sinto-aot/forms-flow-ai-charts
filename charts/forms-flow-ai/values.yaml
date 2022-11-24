@@ -42,9 +42,9 @@ mongodb:
     port: 27017
   replicaSetName: "forms-flow-ai-mongodb"
   podSecurityContext:
-    enabled: true
-    fsGroup: 1001
-    runAsUser: 1001
+    enabled: false
+    runAsUser: null
+    fsGroup: null
   useStatefulSet : false
   architecture: standalone
  
@@ -73,9 +73,9 @@ postgresql:
     persistence:
       storageClass: ""
     podSecurityContext:
-      enabled: true
-      fsGroup: 1001
-      runAsUser: 1001
+      enabled: false
+      runAsUser: null
+      fsGroup: null
     service:
       ports:
         postgresql: 5432  # PostgreSQL service port
@@ -91,5 +91,5 @@ insight_api_key: ""
 redis_host: ""
 redis_port: ""
 redis_pass_code: ""
-draft_enabled: "true"
-export_pdf_enabled: "true"
+draft_enabled: "false"
+export_pdf_enabled: "false"
