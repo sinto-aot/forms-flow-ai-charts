@@ -35,6 +35,8 @@ mongodb:
       - mongodb
   containerSecurityContext:
     enabled: false
+    runAsUser: 1001
+    runAsNonRoot: true
   enabled: true
   fullnameOverride: "forms-flow-ai-mongodb"
   service:
@@ -43,10 +45,14 @@ mongodb:
   replicaSetName: "forms-flow-ai-mongodb"
   podSecurityContext:
     enabled: false
-    runAsUser: null
-    fsGroup: null
+    fsGroup: 1001
   useStatefulSet : false
   architecture: standalone
+  persistence:
+    size: 4Gi
+  image:
+    tag: 6.0.4-debian-11-r1 # Set 4.2.21-debian-10-r8 for openshift
+
  
 postgresql:
   auth:
@@ -70,12 +76,14 @@ postgresql:
           CREATE DATABASE "forms-flow-bpm";
     containerSecurityContext:
       enabled: false
+      runAsUser: 1001
+      runAsNonRoot: true
     persistence:
       storageClass: ""
+      size: 8Gi
     podSecurityContext:
       enabled: false
-      runAsUser: null
-      fsGroup: null
+      fsGroup: 1001
     service:
       ports:
         postgresql: 5432  # PostgreSQL service port

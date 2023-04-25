@@ -51,8 +51,6 @@ keycloak:
         size: 2Gi 
       podSecurityContext:
         enabled: false
-        runAsUser: null
-        fsGroup: null
       service:
         ports:
           postgresql: 5432  # PostgreSQL service port
@@ -65,10 +63,10 @@ keycloak:
 
   resources:
     limits:
-      cpu: 500m
+      cpu: 700m
       memory: 3Gi
     requests:
-      cpu: 400m
+      cpu: 500m
       memory: 2Gi
 
   containerSecurityContext:
@@ -83,12 +81,14 @@ keycloak:
       enabled: false
   service:
     type: ClusterIP
+
   ingress:
+    ingressClassName: ""
+    enabled: true
     annotations:
-    #  kubernetes.io/ingress.class: nginx
+#      kubernetes.io/ingress.class: nginx
     extraTls:
       - {}
-    enabled: true
     hostname: #DEFINE_ME
     pathtype: Prefix
     servicePort: http
