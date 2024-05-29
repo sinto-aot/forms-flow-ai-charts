@@ -46,14 +46,14 @@ spec:
 
         - name: OPENAI_API_KEY
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: OPENAI_API_KEY
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: CHAT_BOT_MODEL_ID
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: CHAT_BOT_MODEL_ID
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
 
         - name: KEYCLOAK_URL
           valueFrom:
@@ -71,7 +71,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: KEYCLOAK_WEB_CLIENT_ID
-              name: "{{ .Chart.Name }}" 
+              name: "{{ .Values.formsflow.configmap }}" 
 
         - name: DATA_ANALYSIS_API_BASE_URL
           valueFrom:
@@ -117,7 +117,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: DATABASE_SUPPORT
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: MODEL_ID
           valueFrom:
             configMapKeyRef:

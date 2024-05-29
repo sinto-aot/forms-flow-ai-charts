@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}
 data:
-  DEBUG: "formio:*"
+
 ---
 {{- if .Values.elastic_search.enabled }} 
 apiVersion: v1

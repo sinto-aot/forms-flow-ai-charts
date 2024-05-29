@@ -1,5 +1,5 @@
 ---
-Domain: #<DEFINE_ME>
+Domain: example.com
 formsflowdb:
   postgresql:
     fullnameOverride: forms-flow-ai-postgresql-ha-pgpool
@@ -8,9 +8,41 @@ formsflowdb:
   service:
     ports:
       postgresql: 5432
-forms-flow-bpm:
+forms_flow_bpm:
+  logLevel: "INFO"
   clientid: "forms-flow-bpm"
   clientsecret: "786001d6-68a8-4519-903c-bc5b5a870d68"
+  camunda:
+    analytics:
+      database: forms-flow-analytics
+    auth:
+      enabled: true
+      revokeCheck: auto
+    database:
+      name: forms-flow-bpm
+      port: 5432
+    historyLevel: auto
+    securityOrigin: '*'
+    logLevel: "INFO"
+    formBuilder:
+      username: demo # CAMUNDA_FORMBUILDER_PIPELINE_USERNAME
+      password: demo # CAMUNDA_FORMBUILDER_PIPELINE_PASSWORD
+    hikari:
+      timeout:
+        connection: 30000 #CAMUNDA_HIKARI_CONNECTION_TIMEOUT
+        idle: 600000 #CAMUNDA_HIKARI_IDLE_TIMEOUT
+        valid: 5000 #CAMUNDA_HIKARI_VALID_TIMEOUT
+      poolsize:
+        max: 10 #CAMUNDA_HIKARI_MAX_POOLSIZE
+    jdbc:
+      driver: org.postgresql.Driver
+      username: postgres
+      password: postgres
+      url: "jdbc:postgresql://${CAMUNDA_DATABASE_SERVICE_NAME}:${CAMUNDA_DATABASE_PORT}/${CAMUNDA_DATABASE_NAME}"
+    websocket:
+      messageType: TASK_EVENT #WEBSOCKET_MESSAGE_TYPE
+      securityOrigin:   #WEBSOCKET_SECURITY_ORIGIN
+  waitFor: "${CAMUNDA_DATABASE_SERVICE_NAME}:${CAMUNDA_DATABASE_PORT}"
   ingress:
       hostname: forms-flow-bpm-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
 forms-flow-forms:
@@ -19,19 +51,36 @@ forms-flow-forms:
     password: "admin"
   ingress:
     hostname: forms-flow-forms-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-forms-flow-api:
+forms_flow_api:
+  database:
+    url: "postgresql://postgres:postgres@forms-flow-ai-postgresql-ha-pgpool:5432/forms-flow-api"
   ingress:
       hostname: forms-flow-api-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-forms-flow-admin:
+forms_flow_admin:
+  database: 
+    url: "postgresql://postgres:postgres@forms-flow-ai-postgresql-ha-pgpool:5432/forms-flow-admin"
   ingress:
       hostname: forms-flow-admin-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-forms-flow-documents-api:
+forms_flow_documents_api:
   ingress:
       hostname: forms-flow-documents-api-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-forms-flow-data-analysis:
+forms_flow_data_analysis:
+  openApiKey: ""
+  chatbotModelId: "gpt-3.5-turbo"
   ingress:
       hostname: forms-flow-data-analysis-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
-forms-flow-analytics:
+forms_flow_analytics:
+  database:
+    username: postgres 
+    password: postgres
+    servicename: forms-flow-ai-postgresql-ha-pgpool
+    port: 5432
+    url: "postgresql://postgres:postgres@forms-flow-ai-postgresql-ha-pgpool:5432/forms-flow-analytics"
+  redash:
+    multiorg: "false"
+    database:
+      username: postgres 
+      password: postgres
   ingress:
       hostname: forms-flow-analytics-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
 forms-flow-idm:
@@ -41,8 +90,12 @@ forms-flow-idm:
   realm: forms-flow-ai
   context-path: /auth
 
-forms-flow-web:
+forms_flow_web:
   clientid: forms-flow-web
+  webclient: forms-flow-web
+  webname: formsflow
+  base_custom_url: ""
+  custom_theme_url: ""
   ingress:
       hostname: forms-flow-web-{{.Release.Namespace}}.{{tpl (.Values.Domain) .}}
 forms-flow-auth:
@@ -51,7 +104,7 @@ forms-flow-auth:
 
 mongodb:
   image:
-    tag: 4.2.21-debian-10-r8
+    tag: 7.0.9-debian-12-r4
   enabled: true
   fullnameOverride: "forms-flow-ai-mongodb"
   clusterDomain: cluster.local
@@ -140,7 +193,7 @@ postgresql-ha:
     image:
       registry: docker.io
       repository: bitnami/postgresql-repmgr
-      tag: 15.1.0-debian-11-r0
+      tag: 16.3.0-debian-12-r8
     replicaCount: 3
     containerPorts:
       postgresql: 5432
@@ -192,7 +245,7 @@ postgresql-ha:
     image:
       registry: docker.io
       repository: bitnami/pgpool
-      tag: 4.3.3-debian-11-r28
+      tag: 4.5.2-debian-12-r0
       digest: ""
       pullPolicy: IfNotPresent
     replicaCount: 1

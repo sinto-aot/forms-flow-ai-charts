@@ -6,18 +6,7 @@ metadata:
     app: {{ .Chart.Name }}
   name: {{ .Chart.Name }}
 data:
-  KEYCLOAK_CLIENT: "{{tpl .Values.webclient .}}"
-  APPLICATION_NAME: "{{tpl .Values.webname .}}"
-  USER_ACCESS_PERMISSIONS: ''
-  PUBLIC_WORKFLOW_ENABLED: "false"
-  OPENTELEMETRY_SERVICE: "false"
-  WEB_BASE_CUSTOM_URL: "{{tpl .Values.web.base_custom_url .}}"
-  CUSTOM_THEME_URL: "{{tpl .Values.web.custom_theme_url .}}"
-  ENABLE_FORMS_MODULE: "true"
-  ENABLE_TASKS_MODULE: "true"
-  ENABLE_DASHBOARDS_MODULE: "true"
-  ENABLE_PROCESSES_MODULE: "true"
-  ENABLE_APPLICATIONS_MODULE: "true"
+
 ---
 apiVersion: v1
 kind: ConfigMap

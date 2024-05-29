@@ -61,7 +61,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: KEYCLOAK_CLIENT
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: REACT_APP_WEB_BASE_URL
           valueFrom:
             configMapKeyRef:
@@ -71,12 +71,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: APPLICATION_NAME
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: REACT_APP_USER_ACCESS_PERMISSIONS
           valueFrom:
             configMapKeyRef:
               key: USER_ACCESS_PERMISSIONS
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: REACT_APP_WEBSOCKET_ENCRYPT_KEY
           valueFrom:
             secretKeyRef:
@@ -146,47 +146,47 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: PUBLIC_WORKFLOW_ENABLED
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: REACT_APP_OPENTELEMETRY_SERVICE
           valueFrom:
             configMapKeyRef:
               key: OPENTELEMETRY_SERVICE
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: REACT_APP_WEB_BASE_CUSTOM_URL
           valueFrom:
             configMapKeyRef:
               key: WEB_BASE_CUSTOM_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: CUSTOM_THEME_URL
           valueFrom:
             configMapKeyRef:
               key: CUSTOM_THEME_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: ENABLE_FORMS_MODULE
           valueFrom:
             configMapKeyRef:
               key: ENABLE_FORMS_MODULE
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: ENABLE_TASKS_MODULE
           valueFrom:
             configMapKeyRef:
               key: ENABLE_TASKS_MODULE
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: ENABLE_DASHBOARDS_MODULE
           valueFrom:
             configMapKeyRef:
               key: ENABLE_DASHBOARDS_MODULE
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: ENABLE_PROCESSES_MODULE
           valueFrom:
             configMapKeyRef:
               key: ENABLE_PROCESSES_MODULE
-              name: "{{ .Chart.Name }}"        
+              name: "{{ .Values.formsflow.configmap }}"        
         - name: ENABLE_APPLICATIONS_MODULE
           valueFrom:
             configMapKeyRef:
               key: ENABLE_APPLICATIONS_MODULE
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.configmap }}"
         - name: KEYCLOAK_URL_HTTP_RELATIVE_PATH
           valueFrom:
             configMapKeyRef:
@@ -200,7 +200,7 @@ spec:
               command: ["/bin/sh", "-c", "\
                                               envsubst < /tmp/{{.Chart.Name}}-config.template/config.js > {{.Values.config_path}}/config.js;" ]
         imagePullPolicy: Always
-        name: {{ .Chart.Name }}
+        name: "{{ .Chart.Name }}"
         ports:
         - containerPort: {{ int .Values.ingress.port }}
           protocol: TCP

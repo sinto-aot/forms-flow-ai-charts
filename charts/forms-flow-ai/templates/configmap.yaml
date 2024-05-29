@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}
 data:
-  DATABASE_NAME: {{ ternary (tpl .Values.formsflowdb.postgresql.database .) "<DEFINE_ME>" .Values.formsflowdb.postgresql.enabled | quote }}
-  DATABASE_PORT: {{ ternary .Values.formsflowdb.service.ports.postgresql "<DEFINE_ME>" .Values.formsflowdb.postgresql.enabled | quote }}
-  DATABASE_SERVICE_NAME: {{ ternary (tpl .Values.formsflowdb.postgresql.fullnameOverride .) "<DEFINE_ME>" .Values.formsflowdb.postgresql.enabled | quote }}
-  BPM_API_URL: https://{{tpl (index .Values "forms-flow-bpm" "ingress" "hostname") .}}/camunda
+  BPM_API_URL: https://{{tpl (index .Values "forms_flow_bpm" "ingress" "hostname") .}}/camunda
   KEYCLOAK_JWT_OIDC_ALGORITHMS: "RS256"
   KEYCLOAK_JWT_OIDC_CACHING_ENABLED: "True"
   KEYCLOAK_JWT_OIDC_JWKS_CACHE_TIMEOUT: "300"
@@ -19,26 +16,20 @@ data:
   KEYCLOAK_URL_REALM: {{ index .Values "forms-flow-idm" "realm" }}
   FORMIO_URL: https://{{tpl (index .Values "forms-flow-forms" "ingress" "hostname") .}}
   FORMIO_DOMAIN: https://{{tpl (index .Values "forms-flow-forms" "ingress" "hostname") .}}
-  WEB_API_URL: https://{{tpl (index .Values "forms-flow-api" "ingress" "hostname") .}}
-  {{- if .Values.mongodb.enabled }} 
-  NODE_CONFIG: '{"mongo":"mongodb://{{ .Values.mongodb.auth.usernames | first }}:{{ .Values.mongodb.auth.passwords | first }}@{{ .Values.mongodb.service.nameOverride }}:{{ .Values.mongodb.service.ports.mongodb }}/{{ .Values.mongodb.auth.databases | first }}"}'
-  MONGODB_URI:  {{ ternary (tpl "mongodb://{{ .Values.mongodb.auth.usernames | first }}:{{ .Values.mongodb.auth.passwords | first }}@{{ .Values.mongodb.service.nameOverride }}:{{ .Values.mongodb.service.ports.mongodb }}/{{ .Values.mongodb.auth.databases | first }}" .) "<DEFINE_ME>" .Values.mongodb.enabled | quote }}
-  {{- else }}
-  MONGODB_URI:  {{ ternary (tpl "mongodb+srv://{{ .Values.mongodb.auth.usernames | first }}:{{ .Values.mongodb.auth.passwords | first }}@{{ .Values.mongodb.service.nameOverride }}/{{ .Values.mongodb.auth.databases | first }}" .) "<DEFINE_ME>" .Values.mongodb.enabled | quote }} 
-  NODE_CONFIG: '{"mongo":"mongodb+srv://{{ .Values.mongodb.auth.usernames | first }}:{{ .Values.mongodb.auth.passwords | first }}@{{ .Values.mongodb.service.nameOverride }}/{{ .Values.mongodb.auth.databases | first }}"}'
-  {{- end }}
-  FORMSFLOW_WEB_URL: https://{{tpl (index .Values "forms-flow-web" "ingress" "hostname") .}}
-  FORMSFLOW_ADMIN_URL: https://{{tpl (index .Values "forms-flow-admin" "ingress" "hostname") .}}/api/v1
-  FORMSFLOW_ADMIN_BASE: https://{{tpl (index .Values "forms-flow-admin" "ingress" "hostname") .}}/api
+  WEB_API_URL: https://{{tpl (index .Values "forms_flow_api" "ingress" "hostname") .}}
+  FORMSFLOW_API_URL: https://{{tpl (index .Values "forms_flow_api" "ingress" "hostname") .}}
+  FORMSFLOW_WEB_URL: https://{{tpl (index .Values "forms_flow_web" "ingress" "hostname") .}}
+  FORMSFLOW_ADMIN_URL: https://{{tpl (index .Values "forms_flow_admin" "ingress" "hostname") .}}/api/v1
+  FORMSFLOW_ADMIN_BASE: https://{{tpl (index .Values "forms_flow_admin" "ingress" "hostname") .}}/api
   MODEL_ID: "Seethal/sentiment_analysis_generic_dataset"
-  INSIGHT_API_URL: https://{{tpl (index .Values "forms-flow-analytics" "ingress" "hostname") .}}
+  INSIGHT_API_URL: https://{{tpl (index .Values "forms_flow_analytics" "ingress" "hostname") .}}
   KEYCLOAK_ENABLE_CLIENT_AUTH: "false"
   MULTI_TENANCY_ENABLED: "false"
-  DATA_ANALYSIS_URL:  https://{{tpl (index .Values "forms-flow-data-analysis" "ingress" "hostname") .}}
+  DATA_ANALYSIS_URL:  https://{{tpl (index .Values "forms_flow_data_analysis" "ingress" "hostname") .}}
   NODE_ENV: "production"
   CUSTOM_SUBMISSION_URL: ""
   CUSTOM_SUBMISSION_ENABLED: "false"
-  FORMSFLOW_DOC_API_URL: https://{{tpl (index .Values "forms-flow-documents-api" "ingress" "hostname") .}}
+  FORMSFLOW_DOC_API_URL: https://{{tpl (index .Values "forms_flow_documents_api" "ingress" "hostname") .}}
   DRAFT_ENABLED: "{{.Values.draft_enabled}}"
   DRAFT_POLLING_RATE: "15000"
   EXPORT_PDF_ENABLED: "{{.Values.export_pdf_enabled}}"
@@ -47,11 +38,38 @@ data:
   REDIS_ENABLED: "false"
   CHROME_DRIVER_PATH: "/usr/local/bin/chromedriver"
   ENABLE_CHATBOT: "false"
-  CHATBOT_URL: "https://{{tpl (index .Values "forms-flow-data-analysis" "ingress" "hostname") .}}/conversations"
+  CHATBOT_URL: "https://{{tpl (index .Values "forms_flow_data_analysis" "ingress" "hostname") .}}/conversations"
   ENABLE_LOW_CODE_DESIGNER: "false"
   ELASTIC_SERVER: "{{.Values.elastic_server}}"
   REDIS_URL: "{{.Values.redis_url}}"
   IPAAS_EMBED_BASE_URL: "{{ .Values.ipaas.embed_base_url }}"
   IPAAS_API_BASE_URL: "{{ .Values.ipaas.api_base_url }}"
-  CONFIGURE_LOGS: "{{.Values.configure_logs}}"
+  CONFIGURE_LOGS: "{{ .Values.configure_logs }}"
   KEYCLOAK_URL_HTTP_RELATIVE_PATH: {{ index .Values "forms-flow-idm" "context-path" }}
+  APP_SECURITY_ORIGIN: "*"
+  CAMUNDA_APP_ROOT_LOG_FLAG: "{{ .Values.forms_flow_bpm.logLevel }}"
+  CAMUNDA_AUTHORIZATION_FLAG: "{{ .Values.forms_flow_bpm.camunda.auth.enabled }}"
+  CAMUNDA_AUTHORIZATION_REVOKE_CHECK_FLAG: "{{ .Values.forms_flow_bpm.camunda.auth.revokeCheck }}"
+  CAMUNDA_HIKARI_CONN_TIMEOUT: "{{ .Values.forms_flow_bpm.camunda.hikari.timeout.connection }}"
+  CAMUNDA_HIKARI_IDLE_TIMEOUT: "{{ .Values.forms_flow_bpm.camunda.hikari.timeout.idle }}"
+  CAMUNDA_HIKARI_VALID_TIMEOUT: "{{ .Values.forms_flow_bpm.camunda.hikari.timeout.valid }}"
+  CAMUNDA_HIKARI_MAX_POOLSIZE: "{{ .Values.forms_flow_bpm.camunda.hikari.poolsize.max }}"
+  CAMUNDA_JDBC_DRIVER: "{{ .Values.forms_flow_bpm.camunda.jdbc.driver }}"
+  WAIT_FOR: "{{ .Values.forms_flow_bpm.waitFor }}"  
+  WEBSOCKET_MESSAGE_TYPE: "{{ .Values.forms_flow_bpm.camunda.websocket.messageType }}"
+  WEBSOCKET_SECURITY_ORIGIN: {{ ternary  (.Values.forms_flow_bpm.camunda.websocket.securityOrigin | quote) (randAlphaNum 6 | quote) (kindIs "string" .Values.forms_flow_bpm.camunda.websocket.securityOrigin) }}
+  DATABASE_SUPPORT: "DISABLED"  
+  KEYCLOAK_WEB_CLIENT_ID: "forms_flow_web"
+  DEBUG: "formio:*"
+  KEYCLOAK_CLIENT: "{{ .Values.forms_flow_web.webclient }}"
+  APPLICATION_NAME: "{{ .Values.forms_flow_web.webname }}"
+  USER_ACCESS_PERMISSIONS: '' 
+  PUBLIC_WORKFLOW_ENABLED: "false"
+  OPENTELEMETRY_SERVICE: "false"
+  WEB_BASE_CUSTOM_URL: {{ tpl (index .Values "forms_flow_web" "base_custom_url" ) . }}
+  CUSTOM_THEME_URL: {{ tpl (index .Values "forms_flow_web" "custom_theme_url" ) . }}
+  ENABLE_FORMS_MODULE: "true"
+  ENABLE_TASKS_MODULE: "true"
+  ENABLE_DASHBOARDS_MODULE: "true"
+  ENABLE_PROCESSES_MODULE: "true"
+  ENABLE_APPLICATIONS_MODULE: "true"

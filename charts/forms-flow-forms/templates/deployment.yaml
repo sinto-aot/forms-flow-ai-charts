@@ -39,9 +39,9 @@ spec:
       - env:
         - name: NODE_CONFIG
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: NODE_CONFIG
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: ROOT_EMAIL
           valueFrom:
             secretKeyRef:
@@ -66,6 +66,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: MULTI_TENANCY_ENABLED
+              name: "{{ .Values.formsflow.configmap }}"
+        - name: DEBUG
+          valueFrom:
+            configMapKeyRef:
+              key: DEBUG
               name: "{{ .Values.formsflow.configmap }}"
         image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: Always

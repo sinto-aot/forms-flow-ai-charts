@@ -37,12 +37,17 @@ spec:
           subPath: filebeat.yml
           name: api-filebeat
       {{- end}}
-      - env:
+      - envFrom:
+        - configMapRef:
+            name: "forms-flow-ai" # webapi environment variables 
+        - secretRef:
+            name: "forms-flow-ai" # webapi environment variables
+        env:
         - name: MONGODB_URI
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: MONGODB_URI
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: BPM_API_URL
           valueFrom:
             configMapKeyRef:
@@ -65,19 +70,19 @@ spec:
               name: "{{ .Values.formsflow.configmap }}"
         - name: DATABASE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_NAME
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: DATABASE_PORT
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_PORT
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: DATABASE_SERVICE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_SERVICE_NAME
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: DATABASE_URL
           valueFrom:
@@ -88,9 +93,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: DATABASE_URL
           valueFrom:
-            configMapKeyRef:
-              key: DATABASE_URL
-              name: "{{ .Chart.Name }}"
+            secretKeyRef:
+              key: WEBAPI_DATABASE_URL
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         - name: JWT_OIDC_ALGORITHMS
           valueFrom:

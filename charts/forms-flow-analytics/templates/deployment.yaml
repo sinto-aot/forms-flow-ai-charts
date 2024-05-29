@@ -25,9 +25,9 @@ spec:
         - server
         envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         - secretRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         env:
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
@@ -39,9 +39,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: REDASH_DATABASE_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         - name: REDASH_WEB_WORKERS
           value: "4"
@@ -51,7 +51,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: REDASH_MULTI_ORG
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         image: "{{ .Values.redash.image.registry}}/{{ .Values.redash.image.repository }}:{{ .Values.redash.image.tag }}"
         imagePullPolicy: Always
         lifecycle:
@@ -95,9 +95,9 @@ spec:
         - worker
         envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         - secretRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         env:
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
@@ -109,9 +109,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: REDASH_DATABASE_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }} 
         - name: WORKERS_COUNT
           value: "2"
@@ -151,9 +151,9 @@ spec:
         - worker
         envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         - secretRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         env:
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
@@ -165,9 +165,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: REDASH_DATABASE_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         - name: WORKERS_COUNT
           value: "1"
@@ -206,9 +206,9 @@ spec:
         - scheduler
         envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         - secretRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         env:
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
@@ -220,9 +220,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: REDASH_DATABASE_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         image: "{{ .Values.redash.image.registry}}/{{ .Values.redash.image.repository }}:{{ .Values.redash.image.tag }}"
         name: "{{ .Chart.Name }}-scheduler"
@@ -260,9 +260,9 @@ spec:
         - worker
         envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         - secretRef:
-            name: "{{ .Chart.Name }}" # default redash environment variables
+            name: "forms-flow-ai" # default redash environment variables
         env:
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
@@ -274,9 +274,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: REDASH_DATABASE_URL
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: REDASH_DATABASE_URL
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         - name: QUEUES
           value: "periodic_emails,default"

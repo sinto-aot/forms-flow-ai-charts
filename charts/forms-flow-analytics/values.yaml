@@ -11,6 +11,7 @@ externalDatabase:
   existingSecretName: "" #name of the existing secret
 formsflow:
   auth: forms-flow-ai-auth
+  secret: forms-flow-ai
 ingress:
   ingressClassName: "" 
   annotations: 

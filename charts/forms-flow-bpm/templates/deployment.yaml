@@ -48,9 +48,9 @@ spec:
       {{- end }}
       - envFrom:
         - configMapRef:
-            name: "{{ .Chart.Name }}" # bpm environment variables 
+            name: "forms-flow-ai" # bpm environment variables 
         - secretRef:
-            name: "{{ .Chart.Name }}" # bpm environment variables
+            name: "forms-flow-ai" # bpm environment variables
         env:
         {{- if .Values.camunda.externalDatabase.existingDatabaseNameKey }}
         - name: CAMUNDA_DATABASE_NAME
@@ -62,9 +62,9 @@ spec:
         {{- if not .Values.camunda.externalDatabase.existingDatabaseNameKey }}
         - name: CAMUNDA_DATABASE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: CAMUNDA_DATABASE_NAME
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end}}
         {{- if .Values.camunda.externalDatabase.existingDatabasePortKey }}
         - name: CAMUNDA_DATABASE_PORT
@@ -76,9 +76,9 @@ spec:
         {{- if not .Values.camunda.externalDatabase.existingDatabasePortKey }}
         - name: CAMUNDA_DATABASE_PORT
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: CAMUNDA_DATABASE_PORT
-              name: "{{ .Chart.Name }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end}}
         {{- if .Values.camunda.externalDatabase.existingDatabaseHostKey }}
         - name: CAMUNDA_DATABASE_SERVICE_NAME
@@ -90,9 +90,9 @@ spec:
         {{- if not .Values.camunda.externalDatabase.existingDatabaseHostKey }}
         - name: CAMUNDA_DATABASE_SERVICE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_SERVICE_NAME
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- end}}
         - name: KEYCLOAK_URL
           valueFrom:

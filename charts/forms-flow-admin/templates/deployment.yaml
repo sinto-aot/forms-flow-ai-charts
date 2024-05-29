@@ -37,22 +37,27 @@ spec:
           subPath: filebeat.yml
           name: admin-filebeat
       {{- end}}
+      - envFrom:
+        - configMapRef:
+            name: "forms-flow-ai" # adminapi environment variables
+        - secretRef:
+            name: "forms-flow-ai" # adminapi environment variables
       - env:
         - name: DATABASE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_NAME
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: DATABASE_PORT
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_PORT
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         - name: DATABASE_SERVICE_NAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: DATABASE_SERVICE_NAME
-              name: "{{ .Values.formsflow.configmap }}"
+              name: "{{ .Values.formsflow.secret }}"
         {{- if .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: DATABASE_URL
           valueFrom:
@@ -63,9 +68,9 @@ spec:
         {{- if not .Values.externalDatabase.existingDatabaseUrlKey }}
         - name: DATABASE_URL
           valueFrom:
-            configMapKeyRef:
-              key: DATABASE_URL
-              name: "{{ .Chart.Name }}"
+            secretKeyRef:
+              key: ADMIN_DATABASE_URL
+              name: "{{ .Values.formsflow.secret }}"
         {{- end }}
         - name: JWT_OIDC_ALGORITHMS
           valueFrom:
