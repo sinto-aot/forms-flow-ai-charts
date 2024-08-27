@@ -26,7 +26,7 @@ spec:
       host: "{{tpl .Values.ingress.hostname .}}"
       http:
         paths:
-          - path: /
+          - path: /webapi(/|$)(.*)
             pathType: Prefix
             backend:
               service:

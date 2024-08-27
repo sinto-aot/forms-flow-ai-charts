@@ -16,8 +16,12 @@ image:
 ingress:
   ingressClassName: ""
   annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE, PATCH"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
   enabled: true # create an ingress for this component 
-  hostname: "{{.Chart.Name}}-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
+  hostname: "forms-flow-web-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
   port: 3001
   tls: true
   selfSigned: false

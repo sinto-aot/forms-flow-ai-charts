@@ -26,7 +26,7 @@ spec:
       host: "{{tpl .Values.ingress.hostname .}}"
       http:
         paths:
-          - path: /camunda
+          - path: /workflow(/|$)(.*)
             pathType: Prefix
             backend:
               service:

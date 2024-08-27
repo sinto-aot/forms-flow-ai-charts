@@ -16,8 +16,12 @@ formsflow:
 ingress:
   ingressClassName: ""
   annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE, PATCH"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
   enabled: true # create an ingress for this component 
-  hostname: "{{.Chart.Name}}-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
+  hostname: "forms-flow-web-{{.Release.Namespace}}.{{tpl .Values.Domain .}}"
   port: 5006
   tls: true
   selfSigned: false
@@ -26,7 +30,7 @@ ingress:
 image:
   registry: docker.io
   repository: formsflow/forms-flow-documents-api
-  tag: v6.0.2 #The image tag to pull from
+  tag: v7.0.0-alpha #The image tag to pull from
 hpa:
   enabled: false 
   CpuAverageUtilization: 80
